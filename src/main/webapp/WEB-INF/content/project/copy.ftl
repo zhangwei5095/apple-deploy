@@ -14,10 +14,16 @@ $().ready(function() {
 	// 表单验证
 	$inputForm.validate({
 		rules: {
-			
+			"name": {
+				required: true,
+				remote: "check_name?oldName=${(info.name)!''}"
+			}
 		},
 		messages: {
-			
+			"name": {
+				required: "必填",
+				remote: "项目已存在"
+			}
 		},
 		submitHandler:function(form){
             form.submit();
@@ -57,7 +63,7 @@ function proccessType() {
 <body>
 <form id="inputForm" method="post" action="save">
 	
-    <div id="auditTab" class="pop_main" style="width:600px;border: 0px solid;">
+    <div id="auditTab" class="pop_main" style="width:600px;border: 0px solid; height:420px; overflow:auto;">
 
        <div class="pop_information_mod">
             <ul class="pop_list merchant_type_add">
@@ -91,6 +97,17 @@ function proccessType() {
                 		<#list envTypeList as env>
 							<option value="${env.getIndex()}" <#if (info.env?? && env.getIndex() == info.env)> selected="selected"</#if>>
 								${env.getName()}
+							</option>
+						</#list>
+						</select>
+                	</li>
+                	
+                	<li class="clearfix">
+                		<label for="plus" class="tit">部署插件：<span class=" red">*</span></label>
+                		<select class="c_select" name="plus" style="width:150px;" id="plus">
+                		<#list plusTypeList as plus>
+							<option value="${plus.getIndex()}" <#if (info.plus?? && plus.getIndex() == info.plus)> selected="selected"</#if>>
+								${plus.getName()}
 							</option>
 						</#list>
 						</select>
